@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inhibitor Pump Adjust</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Inhibitor Pump Adjust</h1>
+        <div class="controls">
+            <div class="input-group">
+                <label for="load-input">% Load</label>
+                <input type="text" id="load-input" placeholder="Enter % Load...">
+            </div>
+            <div class="input-group">
+                <label for="pump-search">Pump search</label>
+                <input type="text" id="pump-search" placeholder="Search for pump...">
+            </div>
+        </div>
+        <div class="table-options">
+            <label for="view-mode">Table View Mode:</label>
+            <select id="view-mode">
+                <option value="wrap" selected>Word Wrap</option>
+                <option value="scroll">Horizontal Scroll</option>
+            </select>
+        </div>
+        <div id="table-container" class="table-wrap">
+            <table id="data-table">
+                <thead>
+                    <tr>
+                        <th>Feed pump</th>
+                        <th>Destination</th>
+                        <th>Inhibitor</th>
+                        <th>Drum</th>
+                        <th>%Stroke</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be inserted here by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        <p id="error-message" class="error"></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

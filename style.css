@@ -1,0 +1,99 @@
+body {
+    font-family: sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+h1 {
+    color: #6a0dad;
+    text-align: center;
+}
+
+.controls {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.input-group label {
+    margin-bottom: 5px;
+    color: #666;
+}
+
+.input-group input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.table-options {
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+#table-container {
+    overflow-x: auto;
+}
+
+/* Default Word Wrap Mode */
+.table-wrap table {
+    word-wrap: break-word;
+    table-layout: fixed;
+    width: 100%;
+}
+
+/* Horizontal Scroll Mode */
+.table-scroll table {
+    white-space: nowrap;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden; /* Ensures the border radius is applied to the table */
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+thead {
+    background-color: #6a0dad;
+    color: #fff;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    background-color: #e9d8f8;
+}
+
+.error {
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+}
