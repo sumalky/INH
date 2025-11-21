@@ -1,7 +1,7 @@
 body {
     font-family: sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
+    background-color: #ffffff;
+    color: #212529;
     margin: 0;
     padding: 20px;
 }
@@ -9,14 +9,14 @@ body {
 .container {
     max-width: 1200px;
     margin: auto;
-    background: #fff;
+    background: #ffffff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: 1px solid #dee2e6;
 }
 
 h1 {
-    color: #6a0dad;
+    color: #343a40;
     text-align: center;
 }
 
@@ -35,12 +35,12 @@ h1 {
 
 .input-group label {
     margin-bottom: 5px;
-    color: #666;
+    color: #495057;
 }
 
 .input-group input {
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #ced4da;
     border-radius: 4px;
     font-size: 16px;
 }
@@ -76,20 +76,20 @@ table {
 th, td {
     padding: 12px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #dee2e6;
 }
 
 thead {
-    background-color: #6a0dad;
-    color: #fff;
+    background-color: #f8f9fa;
+    color: #495057;
 }
 
 tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #f8f9fa;
 }
 
 tbody tr:hover {
-    background-color: #e9d8f8;
+    background-color: #e9ecef;
 }
 
 .error {
