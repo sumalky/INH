@@ -18,10 +18,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const rows = csvText.trim().split('\n');
             headers = rows[0].split(',').map(h => h.trim());
             data = rows.slice(1).map(row => {
-                const values = row.split(',').map(v => v.trim());
+                const values = parseCsvRow(row);
                 let rowData = {};
                 headers.forEach((header, index) => {
-                    rowData[header] = values[index];
+                    rowData[header] = values[index] ? values[index].trim() : '';
                 });
                 return rowData;
             });
@@ -41,6 +41,25 @@ document.addEventListener('DOMContentLoaded', () => {
             tableContainer.classList.add('table-wrap');
         }
     });
+
+    function parseCsvRow(row) {
+        const values = [];
+        let current = '';
+        let inQuotes = false;
+        for (let i = 0; i < row.length; i++) {
+            const char = row[i];
+            if (char === '"') {
+                inQuotes = !inQuotes;
+            } else if (char === ',' && !inQuotes) {
+                values.push(current);
+                current = '';
+            } else {
+                current += char;
+            }
+        }
+        values.push(current);
+        return values;
+    }
 
     function filterAndRender() {
         let filteredData = [...data];
