@@ -98,39 +98,51 @@ tbody tr:hover {
     margin-top: 10px;
 }
 
+#card-container {
+    display: none; /* Hidden by default */
+}
+
+.card {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.card-title {
+    font-size: 1.25em;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+}
+
+.card-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.card-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.25rem 0;
+}
+
 /* Responsive adjustments for mobile */
-@media (max-width: 600px) {
-    thead {
-        display: none; /* Hide table headers on small screens */
+@media (max-width: 768px) and (orientation: portrait) {
+    #table-container {
+        display: none; /* Hide table on portrait mobile */
     }
-
-    tr {
-        display: block;
-        margin-bottom: 1rem;
-        border: 1px solid #dee2e6;
-        padding: 0.75rem;
-        border-radius: 4px;
+    #card-container {
+        display: block; /* Show cards on portrait mobile */
     }
+}
 
-    /* Make Feed Pump its own block */
-    td:nth-child(1) {
-        display: block;
-        font-weight: bold;
-        font-size: 1.1em;
-        margin-bottom: 0.5rem;
-        border: none;
-        padding: 0;
+@media (min-width: 769px) or (orientation: landscape) {
+    #table-container {
+        display: block; /* Show table on landscape/desktop */
     }
-
-    /* The rest are inline */
-    td:not(:nth-child(1)) {
-        display: inline; /* or inline-block */
-        border: none;
-        padding: 0.1rem 0.5rem 0.1rem 0;
+    #card-container {
+        display: none; /* Hide cards on landscape/desktop */
     }
-
-    td:nth-child(2)::before { content: "Destination: "; font-weight: 500; }
-    td:nth-child(3)::before { content: "Inhibitor: "; font-weight: 500; }
-    td:nth-child(4)::before { content: "Drum: "; font-weight: 500; }
-    td:nth-child(5)::before { content: "%Stroke: "; font-weight: 500; }
 }
