@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const viewMode = document.getElementById('view-mode');
     const tableBody = document.querySelector('#data-table tbody');
     const tableContainer = document.getElementById('table-container');
+    const cardContainer = document.getElementById('card-container');
     const errorMessage = document.getElementById('error-message');
 
     let data = [];
@@ -17,15 +18,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const rows = csvText.trim().split('\n');
             headers = rows[0].split(',').map(h => h.trim());
             data = rows.slice(1).map(row => {
-                const values = row.split(',').map(v => v.trim());
+                const values = parseCsvRow(row);
                 let rowData = {};
                 headers.forEach((header, index) => {
-                    rowData[header] = values[index];
+                    rowData[header] = values[index] ? values[index].trim() : '';
                 });
                 return rowData;
             });
             // Initial render
-            renderTable(data);
+            filterAndRender();
         });
 
     // Add event listeners
@@ -40,6 +41,25 @@ document.addEventListener('DOMContentLoaded', () => {
             tableContainer.classList.add('table-wrap');
         }
     });
+
+    function parseCsvRow(row) {
+        const values = [];
+        let current = '';
+        let inQuotes = false;
+        for (let i = 0; i < row.length; i++) {
+            const char = row[i];
+            if (char === '"') {
+                inQuotes = !inQuotes;
+            } else if (char === ',' && !inQuotes) {
+                values.push(current);
+                current = '';
+            } else {
+                current += char;
+            }
+        }
+        values.push(current);
+        return values;
+    }
 
     function filterAndRender() {
         let filteredData = [...data];
@@ -61,7 +81,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const loadNumber = parseFloat(loadValue);
             if (isNaN(loadNumber)) {
                 errorMessage.textContent = 'Please enter a valid number for % Load.';
-                renderTable([]); // Clear table if input is not a number
+                renderTable([]);
+                renderCards([]);
                 return;
             }
 
@@ -69,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!strokeHeader) {
                 errorMessage.textContent = 'Load value is out of range.';
                 renderTable([]);
+                renderCards([]);
                 return;
             }
 
@@ -89,6 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         renderTable(filteredData);
+        renderCards(filteredData);
     }
 
     function findStrokeHeader(load) {
@@ -124,5 +147,47 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             tableBody.appendChild(tr);
         });
+    }
+
+    function renderCards(dataToRender) {
+        cardContainer.innerHTML = '';
+        if (dataToRender.length === 0) {
+            return; // No need to show error message twice
+        }
+
+        // Group data by 'Feed pump'
+        const groupedData = dataToRender.reduce((acc, row) => {
+            const key = row['Feed pump'];
+            if (!acc[key]) {
+                acc[key] = [];
+            }
+            acc[key].push(row);
+            return acc;
+        }, {});
+
+        // Create a card for each group
+        for (const pumpName in groupedData) {
+            const card = document.createElement('div');
+            card.className = 'card';
+
+            const title = document.createElement('h2');
+            title.className = 'card-title';
+            title.textContent = pumpName;
+            card.appendChild(title);
+
+            const list = document.createElement('ul');
+            list.className = 'card-list';
+            groupedData[pumpName].forEach(row => {
+                const listItem = document.createElement('li');
+                const strokeValue = (row['%Stroke'] === '-') ? '-' : `${row['%Stroke']}%`;
+                listItem.innerHTML = `
+                    <span>${row['Drum']} (${row['Inhibitor']})</span>
+                    <span>${row['Destination']} = ${strokeValue}</span>
+                `;
+                list.appendChild(listItem);
+            });
+            card.appendChild(list);
+            cardContainer.appendChild(card);
+        }
     }
 });
